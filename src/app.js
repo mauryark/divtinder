@@ -3,10 +3,21 @@ const { adminAuth, userAuth } = require('./midleware/auth');
 
 const app =  express();
 
+app.use('/error', (req,res,next)=>{
+    throw new Error('dkdkdkdkd');
+});
+
+
+app.use('/', (err, req, res, next)=>{
+  if(err){
+    res.status(501).send('Somthing worng!');
+  }
+});
+
 app.use('/admin', adminAuth)
 app.use('/admin/getData', (req, res, next)=>{
   res.send('showAll Data');
-})
+});
 
 
 
