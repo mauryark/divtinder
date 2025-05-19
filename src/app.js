@@ -1,12 +1,18 @@
 const express = require('express');
+const { adminAuth, userAuth } = require('./midleware/auth');
 
 const app =  express();
+
+app.use('/admin', adminAuth)
+app.use('/admin/getData', (req, res, next)=>{
+  res.send('showAll Data');
+})
 
 
 
 // app.use('/' (req, res,next) => routeone,[route2, route3], route4, route5) OR 
 // app.use('/' (req, res,next) => [routeone,route2, route3, route4, route5])
-app.use('/user', (req, res, next) => {
+app.use('/user', userAuth, (req, res, next) => {
   console.log('First route response calling...');
   // res.send('First User Response!');
   next();
