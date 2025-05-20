@@ -16,16 +16,14 @@ connectDB()
   .catch((err) => {
     console.log("Database cannot be connected!");
   });
+// convert requst to json
+  app.use(express.json());
 
 app.post("/signup", async (req, res, next) => {
-  const userData = new User({
-    firstName: "Raj",
-    lastName: "Kamal",
-    email: "raj@gmail.com",
-    password: "raj@welocme123",
-    age: 32,
-    gender: "Male",
-  });
+
+  // console.log(req.body);
+
+  const userData = new User(req.body);
 
   try {
     await userData.save();
