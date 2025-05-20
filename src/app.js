@@ -49,6 +49,16 @@ app.get("/get-user-by-email", async (req, res) => {
   }
 });
 
+app.delete('/user', async (req, res)=>{
+    try{
+        // await User.findByIdAndDelete(req.body.id);
+        await User.findByIdAndDelete({"_id":req.body.id});            
+        res.send("User deleted successfully!");
+    } catch (err) {
+    res.status(400).send("Something went worng! " + err.message);
+  }
+})
+
 /* app.use('/error', (req,res,next)=>{
     throw new Error('dkdkdkdkd');
 });
