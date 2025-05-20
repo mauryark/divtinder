@@ -17,19 +17,35 @@ connectDB()
     console.log("Database cannot be connected!");
   });
 // convert requst to json
-  app.use(express.json());
+app.use(express.json());
 
 app.post("/signup", async (req, res, next) => {
-
   // console.log(req.body);
-
   const userData = new User(req.body);
-
   try {
     await userData.save();
     res.send("User created successfully!");
   } catch (err) {
     res.status(400).send("Getting some issue in saving! " + err.message);
+  }
+});
+
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (err) {
+    res.status(400).send("Something went worng! " + err.message);
+  }
+});
+
+app.get("/get-user-by-email", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) res.status(404).send("User not found!");
+    else res.send(user);
+  } catch (err) {
+    res.status(400).send("Something went worng! " + err.message);
   }
 });
 
