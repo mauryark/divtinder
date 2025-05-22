@@ -57,7 +57,19 @@ app.delete('/user', async (req, res)=>{
     } catch (err) {
     res.status(400).send("Something went worng! " + err.message);
   }
-})
+});
+
+app.patch('/user', async (req, res)=>{
+  try{
+    const userId = req.body.userId;
+    const data = req.body;
+    const beforeUpdatingData = await User.findOneAndUpdate({_id:userId}, data, {'returnDocument':"before"});
+    console.log(beforeUpdatingData);
+    res.send("User updated successfully!");
+  }catch (err) {
+    res.status(400).send("Something went worng! " + err.message);
+  }
+});
 
 /* app.use('/error', (req,res,next)=>{
     throw new Error('dkdkdkdkd');
